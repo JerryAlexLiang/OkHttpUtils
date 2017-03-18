@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OkHttpUtils</string>
+    <string name="title_name">致一科技1.0</string>
+    <string name="search_content">请输入关键字搜索内容</string>
+    <string name="skip_splash">跳过</string>
+    <string name="home_hall">礼包</string>
+</resources>

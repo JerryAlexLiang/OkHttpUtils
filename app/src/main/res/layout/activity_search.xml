@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SearchActivity">
+
+    <LinearLayout
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ff0000"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/action_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/back" />
+
+        <EditText
+            android:id="@+id/et_search_key"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@drawable/shape_new_search"
+            android:hint="@string/search_content" />
+
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:src="@drawable/search3" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_view_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+</RelativeLayout>
