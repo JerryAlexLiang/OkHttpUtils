@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_hot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yangliang.okhttputils.activity.HotActivity">
+
+    <RelativeLayout
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ff0000"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/action_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/run_content_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:text="致一科技员工热度"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"/>
+</RelativeLayout>

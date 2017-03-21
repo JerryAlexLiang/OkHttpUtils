@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DataInfo dataInfo;
     private ImageView mSearchBtn;
     private TextView mHomeHallBtn;
+    private TextView mTvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.setMessage("正在加载中...");
 
         //初始化视图
+        mTvTitle = (TextView) findViewById(R.id.run_content_tv_name);
         mListView = (ListView) findViewById(R.id.list_view);
         mEmptyContent = (TextView) findViewById(R.id.empty_tv);
         mRefreshBtn = (ImageView) findViewById(R.id.refresh_btn);
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mListView.setOnItemClickListener(this);
 //        mSearchBtn.setOnClickListener(this);
         mHomeHallBtn.setOnClickListener(this);
+        mTvTitle.setOnClickListener(this);
+
 
     }
 
@@ -127,6 +131,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_home_hall:
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
+                break;
+
+            case R.id.run_content_tv_name:
+                Intent webIntent = new Intent(MainActivity.this,WebViewActivity.class);
+                startActivity(webIntent);
                 break;
         }
 

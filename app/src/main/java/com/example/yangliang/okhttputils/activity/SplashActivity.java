@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -20,6 +21,7 @@ public class SplashActivity extends AppCompatActivity {
     public static final int START_ACTIVITY = 0X1; //启动主页面
     public static final int TIME_COUNTDOWN = 0X2; //倒计时
     public static final int RANDOM_CHANGE = 0X3; //切换背景图
+    public static final int STOP_HANDLER = 0X4; //关闭handler
 
     private int[] bacgroundIcon = {R.drawable.bacground1, R.drawable.bacground2,
             R.drawable.bacground3, R.drawable.bacground4};
@@ -86,6 +88,12 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     break;
 
+                case STOP_HANDLER:
+                    //关闭SplashActivity欢迎页
+                    finish();
+                    handler.removeMessages(START_ACTIVITY);
+                    break;
+
             }
 
         }
@@ -96,11 +104,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        //发送消息-欢迎页5秒后结束
+        //发送消息-欢迎页10秒后结束
         handler.sendEmptyMessageDelayed(START_ACTIVITY, 10000);
         //发送消息-倒计时
         handler.sendEmptyMessageDelayed(TIME_COUNTDOWN, 1000);
-        //每两秒随机切换背景图
+        //每秒随机切换背景图
         handler.sendEmptyMessageDelayed(RANDOM_CHANGE, 1000);
 
         //初始化视图
@@ -115,11 +123,24 @@ public class SplashActivity extends AppCompatActivity {
                 //跳转到主页面
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
-                //关闭SplashActivity欢迎页
-                finish();
+//                //关闭SplashActivity欢迎页
+//                finish();
+//                handler.sendEmptyMessage(START_ACTIVITY);
+                handler.sendEmptyMessage(STOP_HANDLER);
             }
         });
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && KeyEvent.KEYCODE_BACK == keyCode) {
+            finish();
+            System.exit(0);
+        } else if (KeyEvent.KEYCODE_HOME == keyCode) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
 
     }
 }
