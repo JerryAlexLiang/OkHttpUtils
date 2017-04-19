@@ -50,14 +50,22 @@ public class HotActivity extends AppCompatActivity implements View.OnClickListen
         // 初始化比例
         //mWebView.setInitialScale(50);
         WebSettings settings = mWebView.getSettings();
-        // 支持使用接口,可任意比例缩放
-        settings.setUseWideViewPort(true);
-        // setUseWideViewPort方法设置WebView推荐使用的窗口。setLoadWithOverviewMode方法是设置WebView加载的页面的模式。
-        settings.setLoadWithOverviewMode(true);
         // 支持脚本JavaScript
         settings.setJavaScriptEnabled(true);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
+        //设置可缩放
         settings.setSupportZoom(true);
+        settings.setDomStorageEnabled(true);
+        //设置出现缩放工具，其中settings.setBuiltInZoomControls(true)必须要加，不然缩放不起作用
+        settings.setBuiltInZoomControls(true);
+        //设置不显示WebView缩放按钮，但可缩放
+        settings.setDisplayZoomControls(false);
+
+//        //扩大比例的缩放,页面适应手机屏幕的分辨率，完整的显示在屏幕上
+//        settings.setUseWideViewPort(true);
+//        // setUseWideViewPort方法设置WebView推荐使用的窗口。setLoadWithOverviewMode方法是设置WebView加载的页面的模式。
+//        settings.setLoadWithOverviewMode(true);
+//        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override

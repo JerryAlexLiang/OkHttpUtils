@@ -25,7 +25,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.HotActivity"></activity>
+        <activity android:name=".activity.HotActivity" />
+        <activity android:name=".activity.TestActivity"></activity>
     </application>
 
 </manifest>

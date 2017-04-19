@@ -1,8 +1,10 @@
 package com.example.yangliang.okhttputils.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -50,6 +52,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!netConnect) {
             Toast.makeText(this, "当前网络未连接,请查看网络状态", Toast.LENGTH_SHORT).show();
         }
+
+        //初始化dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
+        builder.setIcon(R.drawable.def_head);
+        builder.setTitle("提示");
+        builder.setMessage("您关注的主播正在直播！");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("查看", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(MainActivity.this,WebViewActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        builder.create().show();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("正在加载中...");

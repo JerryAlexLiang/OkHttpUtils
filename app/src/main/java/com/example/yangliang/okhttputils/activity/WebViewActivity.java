@@ -18,13 +18,14 @@ import com.liang.OkHttpLibrary.OkHttpUtils;
 
 public class WebViewActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String VIDEO_URL = "http://60.174.83.217:8091/wjbzh5/spzb/spzbIndex.do?";
+    public static final String VIDEO_URL = "http://218.23.170.98:8098/bziflytek-web/spzb/mobile/index.do";
 
     private boolean netConnect;
     private WebView mWebView;
     private ProgressDialog progressDialog;
     private ImageView mBackBtn;
     private TextView mHot;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,12 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         mWebView = (WebView) findViewById(R.id.web_view);
         mBackBtn = (ImageView) findViewById(R.id.action_back);
         mHot = (TextView) findViewById(R.id.tv_hot);
+        title = (TextView) findViewById(R.id.run_content_tv_name);
 
         //监听事件
         mBackBtn.setOnClickListener(this);
         mHot.setOnClickListener(this);
+        title.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("提示");
@@ -56,12 +59,16 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         // 初始化比例
         //mWebView.setInitialScale(50);
         WebSettings settings = mWebView.getSettings();
-        // 支持使用接口,可任意比例缩放
-        settings.setUseWideViewPort(true);
-        // setUseWideViewPort方法设置WebView推荐使用的窗口。setLoadWithOverviewMode方法是设置WebView加载的页面的模式。
-        settings.setLoadWithOverviewMode(true);
         // 支持脚本JavaScript
         settings.setJavaScriptEnabled(true);
+
+        //设置可缩放
+        settings.setSupportZoom(true);
+        settings.setDomStorageEnabled(true);
+        //设置出现缩放工具，其中settings.setBuiltInZoomControls(true)必须要加，不然缩放不起作用
+        settings.setBuiltInZoomControls(true);
+        //设置不显示WebView缩放按钮，但可缩放
+        settings.setDisplayZoomControls(true);
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -122,9 +129,14 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.tv_hot:
-                //跳转到搜索大厅页面
+                //跳转到热度页面
                 Intent intent = new Intent(WebViewActivity.this, HotActivity.class);
                 startActivity(intent);
+                break;
+
+            case R.id.run_content_tv_name:
+                Intent intent1 = new Intent(WebViewActivity.this,TestActivity.class);
+                startActivity(intent1);
                 break;
         }
 

@@ -54,7 +54,12 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        //返回上一层
-        finish();
+        switch (v.getId()){
+            case R.id.action_back:
+                //返回上一层
+                finish();
+                break;
+
+        }
     }
 }
