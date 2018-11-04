@@ -25,9 +25,10 @@ import okhttp3.Response;
  * 1、同步请求  execute方法就是同步请求
  * 2、异步请求 enqueue方法就是异步请求，开启的新的线程执行请求，并且子线程是有线程池管理
  */
-public class GetActivity extends AppCompatActivity implements View.OnClickListener{
+public class GetActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String URL = "http://www.1688wan.com/majax.action?method=bdxqs&pageNo=0";
+    private static final String TAG = "GetActivity";
     private TextView mShowResultTxt;
     private Button mAsyncBtn;
     private Button mSyncBtn;
@@ -40,6 +41,8 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
      * response封装的是服务返回的结果数据
      */
     private OkHttpClient mOkClient = new OkHttpClient();
+    private Button mClearBtn;
+    private Request request;
 
 
     @Override
@@ -50,11 +53,20 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initView() {
+
+        //创建Request请求对象
+        request = new Request.Builder()
+                .url(URL)//请求的网络地址
+                .get()//表示Get请求
+                .build();
+
         mShowResultTxt = (TextView) findViewById(R.id.okhttp_get_show_result_tv);
         mAsyncBtn = (Button) findViewById(R.id.okhttp_get_async_btn);
         mSyncBtn = (Button) findViewById(R.id.okhttp_get_sync_btn);
+        mClearBtn = (Button) findViewById(R.id.btn_clear);
         mAsyncBtn.setOnClickListener(this);
         mSyncBtn.setOnClickListener(this);
+        mClearBtn.setOnClickListener(this);
     }
 
     @Override
@@ -63,9 +75,18 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.okhttp_get_sync_btn:
                 runOnThread();
                 break;
+
             case R.id.okhttp_get_async_btn:
                 asyncRequest();
                 break;
+
+            case R.id.btn_clear:
+                mShowResultTxt.setText("");
+                break;
+
+            default:
+                break;
+
         }
     }
 
@@ -75,6 +96,9 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void run() {
                 final String result = syncRequest();
+//                Log.e(TAG, "同步请求" + result);
+                LogUtils.e("同步请求", result);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -89,14 +113,16 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
      * 同步请求
      */
     private String syncRequest() {
-        //创建Request请求对象
-        Request request = new Request.Builder()
-                .url(URL)//请求的网络地址
-                .get()//表示Get请求
-                .build();
+//        //创建Request请求对象
+//        Request request = new Request.Builder()
+//                .url(URL)//请求的网络地址
+//                .get()//表示Get请求
+//                .build();
         //执行请求
         try {
             //response是网络请求成功之后，服务器返回的数据的封装对象
+//            Call call = mOkClient.newCall(request);
+//            Response response = call.execute();
             Response response = mOkClient.newCall(request).execute();
             //获得请求的结果
             //注意：response.body().string()执行获取一次，再次获取为空
@@ -112,10 +138,24 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
      * Get异步请求
      */
     private void asyncRequest() {
-        //默认是Get请求
-        Request request = new Request.Builder()
-                .url(URL)
-                .build();
+//        //默认是Get请求
+//        Request request = new Request.Builder()
+//                .url(URL)
+//                .build();
+
+//        Call call = mOkClient.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//
+//            }
+//        });
+
         //enqueue方法会开启一个子线程执行此次请求
         mOkClient.newCall(request).enqueue(new Callback() {
             /**
@@ -126,6 +166,8 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onFailure(Call call, IOException e) {
                 //执行在子线程中
+                LogUtils.e("onFailure", e.getMessage());
+                e.printStackTrace();
             }
 
             /**
@@ -137,7 +179,12 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //执行在子线程中
+                //获得请求的结果
+                //注意：response.body().string()执行获取一次，再次获取为空
                 final String result = response.body().string();
+//                Log.e(TAG, "异步请求： " + result);
+                LogUtils.e("异步请求", result);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -146,5 +193,13 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
                 });
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Call call = mOkClient.newCall(request);
+        call.cancel();
+        Log.e(TAG, "取消网络请求：" + call.isCanceled());
     }
 }
