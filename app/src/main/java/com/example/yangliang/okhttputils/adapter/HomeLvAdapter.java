@@ -63,10 +63,10 @@ public class HomeLvAdapter extends BaseAdapter {
         //数据映射
         DataInfo.ListBean listBean = dataList.get(position);
         viewHolder.nameTextView.setText(listBean.getName());
-        viewHolder.authorTextView.setText(listBean.getAuthor());
-        viewHolder.timeTextView.setText(listBean.getAddtime());
+        viewHolder.authorTextView.setText(listBean.getName());
+        viewHolder.timeTextView.setText("数据为空");
 
-        String icon_url = Url.URL_IMAGE + listBean.getIconurl();
+        String icon_url = Url.URL_IMAGE + listBean.getPicBig();
         /*
         下载图片,使用Picasso类库加载网络图片，然后用Transformation方法转化,
         这是一款支持圆角，椭圆，圆形的RoundedImageView类库，可以生成ImageView和Drawable

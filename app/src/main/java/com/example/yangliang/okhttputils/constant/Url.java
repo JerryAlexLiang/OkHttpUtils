@@ -8,7 +8,7 @@ package com.example.yangliang.okhttputils.constant;
 public class Url {
 
     public final static String URL_IMAGE = "http://www.1688wan.com";
-    public static final String BASE_URL = "http://www.1688wan.com/majax.action?method=bdxqs&pageNo=0";
+    public static final String BASE_URL = "http://www.imooc.com/api/teacher?type=4&num=30";
     public final static String URL_SEARCH ="http://www.1688wan.com/majax.action?method=searchGift";//&key=
 
 }

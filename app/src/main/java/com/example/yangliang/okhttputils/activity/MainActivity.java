@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Gson gson = new Gson();
                         DataInfo dataInfo = gson.fromJson(result, DataInfo.class);
                         if (netConnect && result != null) {
-                            dataList.addAll(dataInfo.getList());
+                            dataList.addAll(dataInfo.getData());
                             //刷新适配器
                             adapter.notifyDataSetChanged();
                         }
@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(MainActivity.this, ContentActivity.class);
         intent.putExtra("name", dataList.get(position).getName());
-        intent.putExtra("description", dataList.get(position).getDescs());
-        intent.putExtra("icon", dataList.get(position).getIconurl());
+        intent.putExtra("description", dataList.get(position).getDescription());
+        intent.putExtra("icon", dataList.get(position).getPicBig());
         startActivity(intent);
     }
 
