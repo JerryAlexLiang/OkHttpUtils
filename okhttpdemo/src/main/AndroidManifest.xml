@@ -3,6 +3,8 @@
     package="com.androidxx.yangjw.okhttpdemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".GetActivity" />
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".PostActivity" />
+        <activity android:name=".postAsyncFile" />
+        <activity android:name=".AsyncDownloadActivity"></activity>
     </application>
 
 </manifest>

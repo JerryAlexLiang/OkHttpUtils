@@ -12,6 +12,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 
+import cn.krvision.navigation.utils.CustomProgressDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -27,7 +28,7 @@ import okhttp3.Response;
  */
 public class GetActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String URL = "http://www.1688wan.com/majax.action?method=bdxqs&pageNo=0";
+    public static final String URL = "http://www.baidu.com";
     private static final String TAG = "GetActivity";
     private TextView mShowResultTxt;
     private Button mAsyncBtn;
@@ -43,6 +44,7 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
     private OkHttpClient mOkClient = new OkHttpClient();
     private Button mClearBtn;
     private Request request;
+    private CustomProgressDialog customProgressDialog;
 
 
     @Override
@@ -53,6 +55,8 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initView() {
+
+        customProgressDialog = new CustomProgressDialog(this, "Loading", false);
 
         //创建Request请求对象
         request = new Request.Builder()
@@ -73,10 +77,12 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.okhttp_get_sync_btn:
+                customProgressDialog.show();
                 runOnThread();
                 break;
 
             case R.id.okhttp_get_async_btn:
+                customProgressDialog.show();
                 asyncRequest();
                 break;
 
@@ -127,6 +133,9 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
             //获得请求的结果
             //注意：response.body().string()执行获取一次，再次获取为空
             String result = response.body().string();
+            if (customProgressDialog.isShow()){
+                customProgressDialog.dismiss();
+            }
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,6 +174,9 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
              */
             @Override
             public void onFailure(Call call, IOException e) {
+                if (customProgressDialog.isShow()){
+                    customProgressDialog.dismiss();
+                }
                 //执行在子线程中
                 LogUtils.e("onFailure", e.getMessage());
                 e.printStackTrace();
@@ -178,6 +190,9 @@ public class GetActivity extends AppCompatActivity implements View.OnClickListen
              */
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                if (customProgressDialog.isShow()){
+                    customProgressDialog.dismiss();
+                }
                 //执行在子线程中
                 //获得请求的结果
                 //注意：response.body().string()执行获取一次，再次获取为空

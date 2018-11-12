@@ -3,9 +3,8 @@
 
     <string-array name="home_index_array">
         <item>Get请求</item>
-        <item>Post请求</item>
-        <item>上传</item>
-        <item>下载</item>
-        <item>缓存</item>
+        <item>Post请求-异步上传</item>
+        <item>异步下载文件</item>
+        <item>设置超时时间和缓存</item>
     </string-array>
 </resources>
